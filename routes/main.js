@@ -28,5 +28,13 @@ router.get('/transactions/edit/:id', (req, res) => {
     // Fetch transaction details and pass to the view
     res.render('edit-transactions', { transactionId });
 });
+
+router.get('/report',function(req, res, next){
+    res.render('report.ejs')
+})
+
+router.get('/search',function(req, res, next){
+    res.render('search.ejs')
+})
 // Export the router object so index.js can access it
 module.exports = router
