@@ -15,12 +15,16 @@ router.get('/dashboard',function(req, res, next){
     res.render('dashboard.ejs')
 })
 
-router.get('/transcation',function(req, res, next){
-    res.render('transcation/list.ejs')
+router.get('/transactions',function(req, res, next){
+    res.render('transactions.ejs')
 })
 
-router.get('/transcation/add',function(req, res, next){
-    res.render('add-transaction.ejs')
+router.get('/transcations/add',function(req, res, next){
+    res.render('add-transactions.ejs')
+})
+
+router.get('/transcations/delete',function(req, res, next){
+    res.render('delete-transactions.ejs')
 })
 
 router.get('/transactions/edit/:id', (req, res) => {

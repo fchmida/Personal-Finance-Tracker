@@ -1,8 +1,36 @@
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+{
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+  }
+
+.navbar{
+    background-color: #968d8c;
+    padding: 10px 0px;
+    position: sticky; #keeps nav fixed on top when scrolling
+    top: 0;
+    width: 100%;
+}
+
+.nav-list{
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-list li{
+    margin: 0 20px; /* spacing between links */
+}
+
+.nav-list li a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+    padding: 10px 20px; 
+    transition: background-color 0.3s ease; /* smooths transition for hover efffect */
+}
