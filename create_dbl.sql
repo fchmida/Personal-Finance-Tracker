@@ -15,7 +15,7 @@ CREATE TABLE categories (
     user_id INT NOT NULL,
     category_name VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERNCES users(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 )
 
 CREATE TABLE transactions (

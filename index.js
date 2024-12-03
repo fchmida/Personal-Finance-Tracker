@@ -22,9 +22,9 @@ app.use(express.static(__dirname + '/public'))
 // Define the database connection
 const db = mysql.createConnection ({
     host: 'localhost',
-    user: 'finance_tracker_app',
-    password: 'ft_password',
-    database: 'personal_finance_tracker'
+    user: 'user',
+    password: 'password',
+    database: 'personalFinanceTracker'
 })
 // Connect to the database
 db.connect((err) => {
