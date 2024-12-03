@@ -1,1 +1,27 @@
-<!-- pre filled form fields with current transcation details -->
+   <div id="editForm" style="display: none;">
+    <h2>Edit Transaction</h2>
+    <form id="editTransactionForm" method="POST">
+      <label for="editDescription">Description:</label>
+      <input type="text" id="editDescription" name="description" required>
+
+      <label for="editAmount">Amount:</label>
+      <input type="number" id="editAmount" name="amount" required>
+
+      <label for="editType">Type:</label>
+      <select id="editType" name="type" required>
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+
+      <button type="submit">Update Transaction</button>
+    </form>
+   </div>
+
+   <script>
+    //javascript to handle opening/filling edit form
+    function openEditForm(id){
+      //fetch transcation data using ajax or populate from dom
+      document.getElementById('editForm').style.display = block;
+      doucment.getElementById('editTransactionForm').action = '/transactions/edit/${id}';
+    }
+   </script>

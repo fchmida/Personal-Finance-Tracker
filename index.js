@@ -5,7 +5,6 @@ var ejs = require('ejs')
 //Import mysql module
 var mysql = require('mysql2')
 
-
 // Create the express application object
 const app = express()
 const port = 8000
@@ -37,7 +36,7 @@ db.connect((err) => {
 global.db = db
 
 // Define our application-specific data
-app.locals.financeData = {appName:"BudgetBuddy"};
+app.locals.financeData = {appName:"Personal Finance Tracker"};
 
 // Load the route handlers
 const mainRoutes = require("./routes/main")
