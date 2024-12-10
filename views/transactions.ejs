@@ -30,7 +30,6 @@
         <button type="submit">Add Transaction</button>
       </form>
     
-      <!-- Transcations table -->
     <h2>Your Transactions</h2>
     <table>
       <thead>
@@ -45,7 +44,7 @@
       <tbody>
         <% transactions.forEach(transaction => { %>
         <tr>
-          <td><%= transcation.description %></td>
+          <td><%= transaction.description %></td>
           <td><%= transaction.amount %></td>
           <td><%= transaction.type %></td>
           <td><%= transaction.created_at %></td>
@@ -54,13 +53,13 @@
           <form action="/transaction/delete/<%= transaction.transaction_id %>" method="POST" style="display: inline;">
             <button type="submit">Delete</button>
           </form>
-          <button onclick="openEditForm(<%= transcation.transaction_id %>)">Edit</button>
+          <!-- <button onclick="openEditForm(<%= transcation.transaction_id %>)">Edit</button> -->
           </td>
         </tr>
         <% }) %>
       </tbody>
     </table>
 
-    <p><a href="transactions/delete">Delete Transactions</a></p>
+  
   </body>
 </html>

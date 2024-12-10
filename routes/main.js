@@ -1,6 +1,17 @@
 // Create a new router
 const express = require("express")
 const router = express.Router()
+const bodyParser = require('body-parser');
+const userRoutes = require('./users'); //path to user.js
+
+const app = express();
+
+// Middleware for parsing form data
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+//mount routes with base path
+app.use('./users', userRoutes);
 
 // Handle our routes
 router.get('/',function(req, res, next){
@@ -14,7 +25,6 @@ router.get('/about',function(req, res, next){
 router.get('/dashboard',function(req, res, next){
     res.render('dashboard.ejs')
 })
-
 
 //display transactions page
 router.get('/transactions', (req, res) => {

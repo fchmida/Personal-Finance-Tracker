@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log In to <%=financeData.appName%></title>
+        <link rel="stylesheet" type="text/css" href="/main.css" />
+    </head>
+    <body>
+        <h1>Log In to <%=financeData.appName%></h1>
+        <form action="/users/login" method="POST">
+            <p>
+                <label for="username">Username:</label>
+                <input id="username" type="text" name="username" required/>
+            </p>
+            <p>
+                <label for="password">Password:</label>
+                <input id="password" type="text" name="password" required/>
+            </p>
+            <p>
+                <input type="submit" value="Log In"/>
+                <input type="reset" value="Clear" />
+            </p>
+        </form>
+    </body>
+</html>
