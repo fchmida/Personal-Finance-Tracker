@@ -1,1 +1,1 @@
-Download express, ejs, mysql and node.js
+Download express, ejs, mysql and node.js, bcrypt.js

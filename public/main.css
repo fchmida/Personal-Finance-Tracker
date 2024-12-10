@@ -7,8 +7,8 @@ body, h1, p, form, input, label{
 
 body{
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: #272036;
+    color: #bf416f;
     line-height: 1.6;
     padding: 20px;
   }
@@ -16,22 +16,72 @@ body{
 h1{
     font-size: 2em;
     text-align: center;
-    color: #4CAF50;
+    color: #bf416f;
     margin-bottom: 20px;
 }
 
 form{
     max-width: 400px;
     margin: 0 auto;
-    background: #fff;
+    background: #bfbabe;
     padding: 20px;
     border-radius: 10px;
+    font-weight: bold;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
+
+/* Form Inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 7px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* buttons */
+input[type="submit"],
+input[type="reset"] {
+    background-color :#bfbabe;
+    color: #bf416f;
+    padding: 10px 15px;
+    border: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    width: 49%  /* buttons side by side */
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+    background-color: #f6c6d8;
+}
+
+input[type="reset"] {
+    background-color: #f6c6d86; /* Red background for reset */
+}
+
+input[type="reset"]:hover {
+    background-color: #e76967; /* Darker red on hover */
+}
+
+/* Label Styling */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
 .navbar{
-    background-color: #968d8c;
+    background-color: #bfbabe;
+    border-radius: 10px;
     padding: 10px 0px;
-    position: sticky; #keeps nav fixed on top when scrolling
+    position: sticky;  /* #keeps nav fixed on top when scrolling */
     top: 0;
     width: 100%;
 }
@@ -48,7 +98,7 @@ form{
 
 .nav-list li a{
     text-decoration: none;
-    color: #fff;
+    color: #793e96;
     font-size: 15px;
     padding: 10px 20px; 
     transition: background-color 0.3s ease; /* smooths transition for hover efffect */
