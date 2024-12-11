@@ -61,10 +61,6 @@ input[type="reset"]:hover {
     background-color: #f6c6d8;
 }
 
-input[type="reset"] {
-    background-color: #f6c6d86; /* Red background for reset */
-}
-
 input[type="reset"]:hover {
     background-color: #e76967; /* Darker red on hover */
 }
@@ -75,7 +71,6 @@ label {
     display: block;
     margin-bottom: 5px;
 }
-
 
 .navbar{
     background-color: #bfbabe;

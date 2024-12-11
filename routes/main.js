@@ -11,11 +11,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //mount routes with base path
-app.use('./users', userRoutes);
+app.use('/users', userRoutes);
 
 // Handle our routes
 router.get('/',function(req, res, next){
     res.render('index.ejs')
+})
+
+router.get('/',function(req, res, next){
+    res.render('listusers.ejs')
 })
 
 router.get('/about',function(req, res, next){
