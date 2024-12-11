@@ -30,6 +30,22 @@ router.get('/dashboard',function(req, res, next){
     res.render('dashboard.ejs')
 })
 
+//list users 
+router.get('/listusers', function (req, res) {
+    //query to fetch user data without passwords
+    const sql = "SELECT user_id, username, name, email FROM users";
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Database query error', err);
+            return res.status(500).send("An error occured while fetching user data.");
+        }
+
+        //render user list page
+        res.render('listusers.ejs', { users: results });
+    });
+});
+
 //display transactions page
 router.get('/transactions', (req, res) => {
    db.query('SELECT * FROM transactions', (err, results) => {

@@ -79,6 +79,8 @@ label {
     position: sticky;  /* #keeps nav fixed on top when scrolling */
     top: 0;
     width: 100%;
+    margin-bottom: 20px; /* Add space below the navbar */
+    height: auto; /* ensures navbar adapts only to its content */
 }
 
 .nav-list{
@@ -97,4 +99,38 @@ label {
     font-size: 15px;
     padding: 10px 20px; 
     transition: background-color 0.3s ease; /* smooths transition for hover efffect */
+}
+
+
+.ul-header {
+    position: absolute; /* change to absolute for centering */
+    white-space: nowrap;
+    font-size: 2em;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #bf416f;
+    margin: 50px 0;
+    top: 70%; /*position vertically in center*/
+    left: 45%; /*position horizontally in center*/
+    transform: translate(-50%, -50%); /* Adjust the element's position to truly center it */
+    margin-top: 10vh; /* Add space above the header */
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100hv - 60px); /* Adjust height to avoid interfering with sticky navbar */
+    margin-top: 20px; /* Add spacing from the navbar */
+}
+
+table {
+    position: absolute;
+    border-collapse: collapse;
+    text-align: center;
+    width: 50%;
+    top: 20%; /*position vertically in center*/
+    left: 50%; /*position horizontally in center*/
+    transform: translate(-50%, -50%);
+    margin-top: 40vh;
 }

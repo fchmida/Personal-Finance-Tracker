@@ -5,13 +5,47 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 
 router.get('/login', function (req, res) {
-    res.render('login.ejs');
+    res.render('login.ejs'); //renders form not trigger attempts yet/ extract form data
 });
 
-router.get('/users/list', function (req, res) {
-    //query to fetch user data without passwords
-    
-})
+router.post('/login', function (req, res) {
+    const { username, password } = req.body;
+
+    //ensure username + password provided
+    if (!username || !password) {
+        return res.status(400).send("Both username and password are required.");
+    }
+
+    //query db to find user by username
+    const sql = "SELECT * FROM users WHERE username = ?";
+    db.query(sql, [username], function (err, result) {
+        if (err) {
+            console.log('Error querying database:', err);
+            return res.status(500).send("An error occured while checking your credentials.");
+        }
+
+        if(result.length === 0) {
+            return res.status(401).send("User not found.");
+        }
+
+        //compare entered password with hashed password in db
+        bcryptjs.compare(password, result[0].password_hash, function (err, isMatch) {
+            if (err) {
+                console.log('Error comparing passwords:', err);
+                return res.status(500).send("An error occured during password comparsion.");
+            }
+
+            //directly check comparison result
+            if(isMatch) {
+                //if login is succesful 
+                return res.send(`Welcome back, ${result[0].name}!`);
+            } else {
+                //if passwords dont match
+                return res.status(401).send("Incorrect password.");
+            }
+    });
+    });
+});
 
 // Render the registration page
 router.get('/register', function (req, res) {

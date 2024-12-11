@@ -1,12 +1,43 @@
-<!-- Display users financial summary e.g total balance, recent transcations, budget
-content: welcome message, key metrics:balances,total expenses, total income, links to add transactions or view detailed reports -->
 <!doctype html>
 <html>
   <head>
-    <title>Dashboard</title>
+    <title>User List</title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
-    <h1>Dashboard</h1>
+    <nav class="navbar">
+      <ul class="nav-list">
+    <li><a href="about">About</a></li>
+    <li><a href="users/register">Register</a></li>
+    <li><a href="users/login">Login</a></li>
+    <li><a href="dashboard">Dashboard</a></li>
+    <li><a href="transactions">Transactions</a></li>
+    <li><a href="report">Reports</a></li>
+    <li><a href="listusers">Users</a></li>
+    <li><a href="search">Search</a></li>
+
+    <h1 class="ul-header">User List</h1>
+    <div class="table-container">
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.user_id %></td>
+          <td><%= user.username %></td>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
   </head>
   <body>
-    
+
     </body>
