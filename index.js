@@ -2,12 +2,21 @@
 var express = require ('express')
 var ejs = require('ejs')
 var bodyParser= require ('body-parser')
+const session = require('express-session');
+const app = express(); //initialise app here before using it
+
+//set up session middleware
+app.use(session({
+    secret: 'your-secret-key', // This should be a secret string
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // For development; in production, use `secure: true` with HTTPS
+}));
 
 //Import mysql module
 var mysql = require('mysql2')
 
 // Create the express application object
-const app = express()
 const port = 8000
 
 // Tell Express that we want to use EJS as the templating engine

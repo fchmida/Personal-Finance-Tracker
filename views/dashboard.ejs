@@ -3,7 +3,7 @@ content: welcome message, key metrics:balances,total expenses, total income, lin
 <!doctype html>
 <html>
   <head>
-    <title>Dashboard</title>
+    <title>Welcome to the Dashboard</title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
     <h1>Dashboard</h1>
   </head>
@@ -19,5 +19,8 @@ content: welcome message, key metrics:balances,total expenses, total income, lin
     <li><a href="listusers">Users</a></li>
     <li><a href="search">Search</a></li>
       </ul>
+      <h1>Welcome, <%= user.name %>!</h1>
+      <p>Username: <%= user.username %></p>
+      <a href="/users/logout">Logout</a>
     </nav>
     </body>

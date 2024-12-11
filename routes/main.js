@@ -26,9 +26,13 @@ router.get('/about',function(req, res, next){
     res.render('about.ejs')
 })
 
-router.get('/dashboard',function(req, res, next){
-    res.render('dashboard.ejs')
-})
+router.get('/dashboard',function(req, res){
+    if(!req.session.user) {
+        return res.redirect('/users/login'); //redirect to login if not logged in
+    }
+    //if logged in, render dashboard with user info
+   res.render('dashboard.ejs', { user: req.session.user });
+});
 
 //list users 
 router.get('/listusers', function (req, res) {

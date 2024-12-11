@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
-// const db = require('./db'); // Import db connection
 const saltRounds = 10;
 
 router.get('/login', function (req, res) {
@@ -35,15 +34,31 @@ router.post('/login', function (req, res) {
                 return res.status(500).send("An error occured during password comparsion.");
             }
 
-            //directly check comparison result
+            //if passwords match, create session and redirect to dashboard
             if(isMatch) {
-                //if login is succesful 
-                return res.send(`Welcome back, ${result[0].name}!`);
+                //store user info in session (e.g. username or userid)
+                req.session.user = {
+                    username: result[0].username,
+                    name: result[0].name
+                };
+
+                //redirect to dashboard after login
+                return res.redirect('/dashboard');
             } else {
                 //if passwords dont match
                 return res.status(401).send("Incorrect password.");
             }
     });
+    });
+});
+
+//user logout
+router.get('/logout', function (req, res) {
+    req.session.destroy(function (err) {
+        if (err) {
+            return res.status(500).send("An error occured during logout.");
+        }
+        res.redirect('/users/login'); //redirect to login after logout
     });
 });
 
