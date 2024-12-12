@@ -24,12 +24,30 @@
     </nav>
     <h1>Transcations</h1>
 
-    <!-- Transcation form -->
-     <form action="/transactions/add" method="POST">
+    <!-- Transcation filter form -->
+     <form action="/transactions" method="GET" class="filter-form">
+        <h2>Filter Transactions</h2>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date">
+     
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category">
+
+        <label for="amount_range_min">Amount Min:</label>
+        <input type="number" id="amount_range_min" name="amount_range_min">
+
+        <label for="amount_range_max">Amount Max:</label>
+        <input type="number" id="amount_range_max" name="amount_range_max">
+
+        <button type="submit">Apply Filters</button>
+      </form>
+    
+      <!-- Add transaction form -->
+      <form action="/transactions/add" method="POST">
         <h2>Add Transaction</h2>
         <label for="description">Description:</label>
         <input type="text" id="description" name="description" required>
-     
+
         <label for="amount">Amount:</label>
         <input type="number" id="amount" name="amount" required>
 
@@ -38,12 +56,11 @@
           <option value="income">Income</option>
           <option value="expense">Expense</option>
         </select>
-
         <button type="submit">Add Transaction</button>
-      </form>
-    
-    <h2>Your Transactions</h2>
-    <table>
+      </form> 
+
+    <!-- Transaction table -->
+    <table class="transactions-table">
       <thead>
         <tr>
           <th>Description</th>
@@ -62,16 +79,13 @@
           <td><%= transaction.created_at %></td>
         <td>
           <a href="/transactions/edit/<%= transaction.transaction_id %>">Edit</a>
-          <form action="/transaction/delete/<%= transaction.transaction_id %>" method="POST" style="display: inline;">
+          <form action="/transactions/delete/<%= transaction.transaction_id %>" method="POST" style="display: inline;">
             <button type="submit">Delete</button>
           </form>
-          <!-- <button onclick="openEditForm(<%= transcation.transaction_id %>)">Edit</button> -->
           </td>
         </tr>
         <% }) %>
       </tbody>
     </table>
-
-  
   </body>
 </html>

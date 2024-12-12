@@ -39,7 +39,34 @@ router.get('/dashboard', redirectLogin, function (req, res) {
 
 // Transactions page (protected)
 router.get('/transactions', redirectLogin, function (req, res) {
-    db.query('SELECT * FROM transactions', (err, results) => {
+    let { date_from, date_to, category, amount_min, amount_max } = req.query;
+
+    //construct SQL query with optional filters
+    let query = `SELECT * FROM transactions WHERE 1=1`;
+    let queryParams = [];
+
+    if (date_from) {
+        query += `AND created_at >= ?`;
+        queryParams.push(date_from);
+    }
+    if (date_to) {
+        query += `AND created_at <= ?`;
+        queryParams.push(date_to);
+    }
+    if (category) {
+        query += `AND category LIKE ?`;
+        queryParams.push('%' + category + '%');
+    }
+    if (amount_min) {
+        query += `AND amount >= ?`;
+        queryParams.push(amount_min);
+    }
+    if (amount_max) {
+        query += `AND amount <= ?`;
+        queryParams.push(amount_max);
+    }
+
+    db.query(query, queryParams, (err, results) => {
         if (err) {
             console.error('Error fetching transactions', err);
             return res.status(500).send('Server Error');

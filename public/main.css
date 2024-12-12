@@ -134,3 +134,110 @@ table {
     transform: translate(-50%, -50%);
     margin-top: 40vh;
 }
+
+/* Main container for forms and table */
+.forms-table-container {
+    display: flex;
+    justify-content: flex-start; /* Align everything to the left */
+    gap: 30px; /* Adds space between the forms and table */
+    margin-bottom: 40px; /* Adds some space at the bottom of the container */
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+/* Filter and Add Transaction Forms */
+.form-container {
+    flex: 0 1 35%; /* Makes the forms take up 35% of the container width */
+    min-width: 300px; /* Prevents forms from becoming too small on small screens */
+    background-color: #bfbabe;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Ensures padding and borders are included in the width */
+}
+
+.filter-form, .add-transaction-form {
+    margin-bottom: 20px; /* Adds space below each form */
+}
+
+.filter-form h2, .add-transaction-form h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-form label, .add-transaction-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.filter-form input, .add-transaction-form input, .add-transaction-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.filter-form button, .add-transaction-form button {
+    padding: 10px 15px;
+    background-color: #bf416f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.filter-form button:hover, .add-transaction-form button:hover {
+    background-color: #bf416f;
+}
+
+/* Transaction Table */
+.transactions-table {
+    flex: 1 1 60%; /* Ensures the table takes up 60% of the container width */
+    min-width: 300px; /* Prevents table from becoming too small on small screens */
+    width: 100%;
+    margin-top: 20px; /* Adds space between the form and the table */
+    border-collapse: collapse;
+    box-sizing: border-box; /* Ensures borders are included in the width */
+}
+
+.transactions-table th, .transactions-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Adjust the table header: move it to the left and make it smaller */
+.transactions-table th {
+    background-color: #793e96;
+    color: white;
+    font-size: 14px; /* Make header text smaller */
+    text-align: left; /* Align headers to the left */
+    padding-left: 20px; /* Adds some padding on the left for headers */
+}
+
+/* Adjust table rows (data cells) */
+.transactions-table td {
+    font-size: 14px; /* Makes data text smaller */
+}
+
+.transactions-table td a {
+    text-decoration: none;
+    color: #793e96;
+    font-weight: bold;
+}
+
+.transactions-table td form button {
+    padding: 6px 12px;
+    background-color: #e76967;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.transactions-table td form button:hover {
+    background-color: #bf416f;
+}
