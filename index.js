@@ -4,6 +4,8 @@ const ejs = require('ejs');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
+const validator = require ('express-validator');
+const expressSanitizer = require('express-sanitizer');
 
 const app = express(); // Initialize app here before using it
 const port = 8000;
@@ -25,6 +27,9 @@ app.use((req, res, next) => {
 // Middleware for parsing request body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Create an input sanitizer
+app.use(expressSanitizer());
 
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');

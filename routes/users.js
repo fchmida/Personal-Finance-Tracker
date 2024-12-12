@@ -3,6 +3,8 @@ const router = express.Router();
 const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 
+const { check, validationResult } = require('express-validator');
+
 // Middleware to redirect users to login if not authenticated
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
@@ -19,7 +21,8 @@ router.get('/login', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
-    const { username, password } = req.body;
+    const username = req.sanitize(req.body.username);
+    const password = req.body.password; //password doesnt need sanitization bc of hashing
 
     if (!username || !password) {
         return res.status(400).send("Both username and password are required.");
@@ -71,8 +74,27 @@ router.get('/register', function (req, res) {
     res.render('register.ejs');
 });
 
-router.post('/registered', function (req, res) {
-    const { username, name, email, password } = req.body;
+router.post('/registered', [
+    check('email').isEmail(),
+    check('password').isLength({ min: 8 }).withMessage('Password must be 8 characters long.')
+], function (req, res) {
+    const errors = validationResult(req);
+
+    // If there are validation errors, re-render the register page with errors
+    if (!errors.isEmpty()) {
+        return res.render('register.ejs', {
+            errors: errors.array(),
+            username: req.sanitize(req.body.username) || "", // Preserve input
+            name: req.sanitize(req.body.name) || "",
+            email: req.sanitize(req.body.email) || ""
+        });
+    }
+
+    // If no validation errors, proceed with registration
+    const username = req.sanitize(req.body.username);
+    const name = req.sanitize(req.body.name);
+    const email = req.sanitize(req.body.email);
+    const password = req.body.password;
 
     if (!username || !name || !email || !password) {
         return res.status(400).send("All fields are required.");
@@ -85,14 +107,24 @@ router.post('/registered', function (req, res) {
         }
 
         const sql = "INSERT INTO users (username, name, email, password_hash) VALUES (?, ?, ?, ?)";
-        db.query(sql, [username, name, email, hashedPassword], (err) => {
+        db.query(sql, [username, name, email, hashedPassword], function (err, result) {
             if (err) {
                 console.error('Error inserting user data:', err);
                 return res.status(500).send("An error occurred while saving your data.");
             }
-            res.send(`Hello ${name}, you are now registered!`);
+
+            // Ensure 'result' is used here, where it is defined.
+            req.session.userId = result.insertId; // Use auto-generated ID for the user
+            req.session.user = {
+                username: username,
+                name: name
+            };
+
+            // Redirect to the dashboard after successful registration
+            res.redirect('/dashboard');
         });
     });
 });
+    
 
 module.exports = router;
