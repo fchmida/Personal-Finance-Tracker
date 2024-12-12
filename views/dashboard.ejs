@@ -12,15 +12,16 @@ content: welcome message, key metrics:balances,total expenses, total income, lin
       <ul class="nav-list">
     <li><a href="about">About</a></li>
     <li><a href="users/register">Register</a></li>
-    <li><a href="login">Login</a></li>
+    <li><a href="users/login">Login</a></li>
+
+    <% if (user) { %> <!-- check if user is logged in -->
     <li><a href="dashboard">Dashboard</a></li>
     <li><a href="transactions">Transactions</a></li>
     <li><a href="report">Reports</a></li>
     <li><a href="listusers">Users</a></li>
     <li><a href="search">Search</a></li>
+    <li><a href="/users/logout">Logout</a></li>
+    <% } %>  <!-- End check for logged in user -->
       </ul>
-      <h1>Welcome, <%= user.name %>!</h1>
-      <p>Username: <%= user.username %></p>
-      <a href="/users/logout">Logout</a>
     </nav>
     </body>

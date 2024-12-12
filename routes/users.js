@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 
 router.get('/login', function (req, res) {
-    res.render('login.ejs'); //renders form not trigger attempts yet/ extract form data
+    res.render('login.ejs', { user: req.session.user }); //renders form not trigger attempts yet/ extract form data
 });
 
 router.post('/login', function (req, res) {
