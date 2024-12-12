@@ -14,15 +14,14 @@ const redirectLogin = (req, res, next) => {
     }
 };
 
-// Login route
 router.get('/login', function (req, res) {
     const message = req.query.message === 'logged_out' ? 'You have been logged out.': null;
     res.render('login.ejs', { user: req.session.user, message });
 });
-
+// Login route
 router.post('/login', function (req, res) {
     const username = req.sanitize(req.body.username);
-    const password = req.body.password; //password doesnt need sanitization bc of hashing
+    const password = req.body.password; // password doesn't need sanitization because it's hashed
 
     if (!username || !password) {
         return res.status(400).send("Both username and password are required.");
@@ -46,11 +45,14 @@ router.post('/login', function (req, res) {
             }
 
             if (isMatch) {
-                req.session.userId = username; // Save user session
+                // Correctly set the session variables
+                req.session.userId = result[0].user_id; // Save user ID in the session
                 req.session.user = {
                     username: result[0].username,
                     name: result[0].name
                 };
+
+                // Redirect to dashboard after successful login
                 return res.redirect('/dashboard');
             } else {
                 return res.status(401).send("Incorrect password.");
@@ -80,17 +82,15 @@ router.post('/registered', [
 ], function (req, res) {
     const errors = validationResult(req);
 
-    // If there are validation errors, re-render the register page with errors
     if (!errors.isEmpty()) {
         return res.render('register.ejs', {
             errors: errors.array(),
-            username: req.sanitize(req.body.username) || "", // Preserve input
+            username: req.sanitize(req.body.username) || "",
             name: req.sanitize(req.body.name) || "",
             email: req.sanitize(req.body.email) || ""
         });
     }
 
-    // If no validation errors, proceed with registration
     const username = req.sanitize(req.body.username);
     const name = req.sanitize(req.body.name);
     const email = req.sanitize(req.body.email);
@@ -113,8 +113,8 @@ router.post('/registered', [
                 return res.status(500).send("An error occurred while saving your data.");
             }
 
-            // Ensure 'result' is used here, where it is defined.
-            req.session.userId = result.insertId; // Use auto-generated ID for the user
+            // Save user info in the session
+            req.session.userId = result.insertId; // Use the auto-generated user ID
             req.session.user = {
                 username: username,
                 name: name
@@ -125,6 +125,5 @@ router.post('/registered', [
         });
     });
 });
-    
 
 module.exports = router;

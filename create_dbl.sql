@@ -18,6 +18,14 @@ CREATE TABLE categories (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 )
 
+INSERT INTO categories (user_id, category_name)
+VALUES 
+    (1, 'Groceries'),
+    (1, 'Rent'),
+    (1, 'Utilities'),
+    (1, 'Entertainment');
+
+
 CREATE TABLE transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -29,18 +37,6 @@ CREATE TABLE transactions (
     FOREIGN KEY (user_id) REFRENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE SET NULL
 )
-
-CREATE TABLE budgets (
-    budget_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    category_id INT NOT NULL,
-    budget_limit DECIMAL(10, 2) NOT NULL,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
-);
 
 CREATE TABLE reports (
     report_id INT AUTO_INCREMENT PRIMARY KEY,

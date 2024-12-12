@@ -22,25 +22,13 @@
     <li><a href="search">Search</a></li>
       </ul>
     </nav>
-    <h1>Transcations</h1>
+    <h1>Transactions</h1>
 
-    <!-- Transcation filter form -->
-     <form action="/transactions" method="GET" class="filter-form">
-        <h2>Filter Transactions</h2>
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date">
-     
-        <label for="category">Category:</label>
-        <input type="text" id="category" name="category">
-
-        <label for="amount_range_min">Amount Min:</label>
-        <input type="number" id="amount_range_min" name="amount_range_min">
-
-        <label for="amount_range_max">Amount Max:</label>
-        <input type="number" id="amount_range_max" name="amount_range_max">
-
-        <button type="submit">Apply Filters</button>
-      </form>
+    <!-- Add a search form above the transaction list -->
+<form action="/transactions/search" method="GET">
+  <input type="text" name="query" placeholder="Search transactions..." />
+  <button type="submit">Search</button>
+</form>
     
       <!-- Add transaction form -->
       <form action="/transactions/add" method="POST">

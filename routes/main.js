@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+
 // Middleware to redirect users to login if not authenticated
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
@@ -37,33 +38,35 @@ router.get('/dashboard', redirectLogin, function (req, res) {
     res.render('dashboard.ejs', { user: req.session.user });
 });
 
+// GET: Show transactions (with filters)
 // Transactions page (protected)
 router.get('/transactions', redirectLogin, function (req, res) {
-    let { date_from, date_to, category, amount_min, amount_max } = req.query;
+    let { transaction_date, category, amount_range_min, amount_range_max } = req.query;
 
-    //construct SQL query with optional filters
-    let query = `SELECT * FROM transactions WHERE 1=1`;
-    let queryParams = [];
+    // Construct SQL query with optional filters
+    let query = `
+        SELECT transactions.*, categories.category_name
+        FROM transactions
+        LEFT JOIN categories ON transactions.category_id = categories.category_id
+        WHERE transactions.user_id = ?  -- Filter by current user
+    `;
+    let queryParams = [req.session.userId];  // Always filter by the logged-in user
 
-    if (date_from) {
-        query += `AND created_at >= ?`;
-        queryParams.push(date_from);
-    }
-    if (date_to) {
-        query += `AND created_at <= ?`;
-        queryParams.push(date_to);
+    if (transaction_date) {
+        query += ` AND transaction_date = ?`;
+        queryParams.push(transaction_date);
     }
     if (category) {
-        query += `AND category LIKE ?`;
+        query += ` AND categories.category_name LIKE ?`;
         queryParams.push('%' + category + '%');
     }
-    if (amount_min) {
-        query += `AND amount >= ?`;
-        queryParams.push(amount_min);
+    if (amount_range_min) {
+        query += ` AND amount >= ?`;
+        queryParams.push(amount_range_min);
     }
-    if (amount_max) {
-        query += `AND amount <= ?`;
-        queryParams.push(amount_max);
+    if (amount_range_max) {
+        query += ` AND amount <= ?`;
+        queryParams.push(amount_range_max);
     }
 
     db.query(query, queryParams, (err, results) => {
@@ -76,64 +79,44 @@ router.get('/transactions', redirectLogin, function (req, res) {
 });
 
 // Add transaction (protected)
-router.post('/transaction/add', redirectLogin, function(req, res) {
-    const { description, amount, type } = req.body;
-    db.query(
-        'INSERT INTO transactions (description, amount, type) VALUES (?, ?, ?)',
-        [description, amount, type],
-        (err) => {
-            if (err) {
-                console.error('Error adding transaction:', err);
-                return res.status(500).send('Server Error');
-            }
-            res.redirect('/transactions');
-        }
-    );
-});
- 
-// Edit transaction (protected)
-router.get('/transactions/edit/:id', redirectLogin, function(req, res) {
-    const transactionId = req.params.id;
-    db.query('SELECT * FROM transactions WHERE transaction_id = ?', [transactionId], (err, results) => {
+router.post('/transactions/add', redirectLogin, function (req, res) {
+    const { description, amount, category_id, transaction_date } = req.body;
+
+    // Insert new transaction
+    const sql = `
+        INSERT INTO transactions (description, amount, category_id, user_id, transaction_date)
+        VALUES (?, ?, ?, ?, ?)
+    `;
+    const userId = req.session.userId; // Use the user ID from the session
+
+    db.query(sql, [description, amount, category_id || null, userId, transaction_date], (err) => {
         if (err) {
-            console.error(err);
-            res.status(500).send('Error fetching transaction');
-        } else {
-            res.render('edit-transaction', { transaction: results[0] });
+            console.error('Error adding transaction:', err);
+            return res.status(500).send('Server Error');
         }
+
+        // Redirect to the transactions page after adding
+        res.redirect('/transactions');
     });
 });
 
+// POST: Delete a transaction
+router.post('/transactions/delete/:transaction_id', redirectLogin, function (req, res) {
+    const transactionId = req.params.transaction_id;
 
-// Update transaction (protected)
-router.post('/transaction/edit/:id', redirectLogin, function(req, res) {
-    const { id } = req.params;
-    const { description, amount, type } = req.body;
-    db.query(
-        'UPDATE transactions SET description = ?, amount = ?, type = ? WHERE transaction_id = ?',
-        [description, amount, type, id],
-        (err) => {
-            if (err) {
-                console.error('Error updating transaction:', err);
-                return res.status(500).send('Server Error');
-            }
-            res.redirect('/transactions');
-        }
-    );
-});
-
-
-// Delete transaction (protected)
-router.post('/transactions/delete/:id', redirectLogin, function(req, res) {
-    const { id } = req.params;
-    db.query('DELETE FROM transactions WHERE transaction_id = ?', [id], (err) => {
+    // Delete the transaction from the database
+    const sql = 'DELETE FROM transactions WHERE transaction_id = ? AND user_id = ?';
+    db.query(sql, [transactionId, req.session.userId], (err) => {
         if (err) {
             console.error('Error deleting transaction:', err);
             return res.status(500).send('Server Error');
         }
+
+        // Redirect back to the transactions page after deleting
         res.redirect('/transactions');
     });
 });
+
 
 // Report page (protected)
 router.get('/report', redirectLogin, function (req, res) {
@@ -141,9 +124,37 @@ router.get('/report', redirectLogin, function (req, res) {
 });
 
 // Search page (protected)
-router.get('/search', redirectLogin, function (req, res) {
-    res.render('search.ejs', { user: req.session.user });
+router.get('/transactions/search', redirectLogin, (req, res) => {
+    const query = req.query.query; // Get the search term from the query string
+
+    // Start building the SQL query
+    let sql = `
+        SELECT transactions.*, categories.category_name
+        FROM transactions
+        LEFT JOIN categories ON transactions.category_id = categories.category_id
+        WHERE transactions.user_id = ?`;
+
+    let sqlParams = [req.session.userId]; // Always filter by the logged-in user
+
+    // If there's a search term, filter by description or amount
+    if (query) {
+        sql += ` AND (transactions.description LIKE ? OR transactions.amount LIKE ?)`;
+        sqlParams.push(`%${query}%`, `%${query}%`); // Add the search term to the query parameters
+    }
+
+    // Execute the query
+    db.query(sql, sqlParams, (err, results) => {
+        if (err) {
+            console.error('Error fetching transactions:', err);
+            return res.status(500).send('Server Error');
+        }
+
+        // Render the transactions page with the search results
+        res.render('transactions.ejs', { transactions: results });
+    });
 });
+
+
 
 // Export the router
 module.exports = router;

@@ -111,7 +111,7 @@ label {
     color: #bf416f;
     margin: 50px 0;
     top: 70%; /*position vertically in center*/
-    left: 45%; /*position horizontally in center*/
+    left: 10%; /*position horizontally in center*/
     transform: translate(-50%, -50%); /* Adjust the element's position to truly center it */
     margin-top: 10vh; /* Add space above the header */
 }
@@ -138,7 +138,7 @@ table {
 /* Main container for forms and table */
 .forms-table-container {
     display: flex;
-    justify-content: flex-start; /* Align everything to the left */
+    justify-content: space-between; /* Space between the forms and the table */
     gap: 30px; /* Adds space between the forms and table */
     margin-bottom: 40px; /* Adds some space at the bottom of the container */
     flex-wrap: wrap; /* Allows wrapping on smaller screens */
@@ -146,7 +146,7 @@ table {
 
 /* Filter and Add Transaction Forms */
 .form-container {
-    flex: 0 1 35%; /* Makes the forms take up 35% of the container width */
+    flex: 1 1 45%; /* Ensures the forms take up 45% of the container width */
     min-width: 300px; /* Prevents forms from becoming too small on small screens */
     background-color: #bfbabe;
     padding: 20px;
@@ -195,7 +195,7 @@ table {
 
 /* Transaction Table */
 .transactions-table {
-    flex: 1 1 60%; /* Ensures the table takes up 60% of the container width */
+    flex: 1 1 50%; /* Ensures the table takes up 50% of the container width */
     min-width: 300px; /* Prevents table from becoming too small on small screens */
     width: 100%;
     margin-top: 20px; /* Adds space between the form and the table */
@@ -209,18 +209,9 @@ table {
     border: 1px solid #ddd;
 }
 
-/* Adjust the table header: move it to the left and make it smaller */
 .transactions-table th {
     background-color: #793e96;
     color: white;
-    font-size: 14px; /* Make header text smaller */
-    text-align: left; /* Align headers to the left */
-    padding-left: 20px; /* Adds some padding on the left for headers */
-}
-
-/* Adjust table rows (data cells) */
-.transactions-table td {
-    font-size: 14px; /* Makes data text smaller */
 }
 
 .transactions-table td a {
@@ -240,4 +231,22 @@ table {
 
 .transactions-table td form button:hover {
     background-color: #bf416f;
+}
+
+/* Ensure forms and table stack vertically on smaller screens */
+@media (max-width: 768px) {
+    .forms-table-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-form, .add-transaction-form, .transactions-table {
+        max-width: 100%;
+        width: 100%;
+        min-width: unset; /* Remove minimum width for smaller screens */
+    }
+
+    .forms-table-container {
+        gap: 20px; /* Reduces space between the forms and table on smaller screens */
+    }
 }
