@@ -20,5 +20,8 @@
                 <input type="reset" value="Clear" />
             </p>
         </form>
+        <% if (message) { %>
+            <div class="alert alert-success"><%= message %></div>
+        <% } %>
     </body>
 </html>
