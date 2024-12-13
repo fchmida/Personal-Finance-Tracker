@@ -1,6 +1,22 @@
 const express = require("express");
 const router = express.Router();
+const { getExchangeRate } = require('../index');  // Import the getExchangeRate function
 
+// Endpoint to get exchange rate between two currencies
+router.get('/currency-exchange', async (req, res) => {
+    const { baseCurrency, targetCurrency } = req.query;
+  
+    if (!baseCurrency || !targetCurrency) {
+      return res.status(400).send('Both baseCurrency and targetCurrency parameters are required');
+    }
+  
+    try {
+      const exchangeRate = await getExchangeRate(baseCurrency, targetCurrency);
+      res.json({ exchangeRate });  // Return the exchange rate in the response
+    } catch (error) {
+      res.status(500).send('Error fetching exchange rate');
+    }
+  });
 
 // Middleware to redirect users to login if not authenticated
 const redirectLogin = (req, res, next) => {

@@ -75,5 +75,44 @@
         <% }) %>
       </tbody>
     </table>
+    <h1>Currency Exchange</h1>
+
+    <!-- Form to input base and target currencies -->
+    <form id="currency-form">
+      <label for="baseCurrency">Base Currency:</label>
+      <input type="text" id="baseCurrency" name="baseCurrency" required><br>
+
+      <label for="targetCurrency">Target Currency:</label>
+      <input type="text" id="targetCurrency" name="targetCurrency" required><br>
+
+      <button type="submit">Get Exchange Rate</button>
+    </form>
+
+    <!-- Exchange rate display -->
+    <div id="exchange-rate">
+      <p><strong>Exchange Rate:</strong> <span id="rate"></span></p>
+    </div>
+
+    <script>
+      // Handle form submission
+      document.getElementById('currency-form').addEventListener('submit', async function (e) {
+        e.preventDefault();  // Prevent the default form submission
+
+        const baseCurrency = document.getElementById('baseCurrency').value;
+        const targetCurrency = document.getElementById('targetCurrency').value;
+
+        try {
+          // Send a request to get the exchange rate from the API
+          const response = await fetch(`/currency-exchange?baseCurrency=${baseCurrency}&targetCurrency=${targetCurrency}`);
+          const data = await response.json();
+
+          // Display the exchange rate
+          document.getElementById('rate').textContent = data.exchangeRate;
+        } catch (error) {
+          console.error('Error fetching exchange rate:', error);
+          alert('Error fetching exchange rate. Please try again.');
+        }
+      });
+    </script>
   </body>
 </html>

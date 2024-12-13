@@ -6,6 +6,29 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const validator = require ('express-validator');
 const expressSanitizer = require('express-sanitizer');
+const axios = require('axios');
+
+// Function to get exchange rate
+const getExchangeRate = async (baseCurrency, targetCurrency) => {
+    const apiKey = '4fed1e1e80cbe7515194ada9';  // Your API key
+    const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${baseCurrency}`;
+  
+    try {
+      const response = await axios.get(url);
+      const rates = response.data.conversion_rates;
+  
+      if (rates[targetCurrency]) {
+        return rates[targetCurrency]; // Return the exchange rate for the target currency
+      } else {
+        throw new Error('Currency not supported');
+      }
+    } catch (error) {
+      console.error('Error fetching exchange rate:', error);
+      throw error;
+    }
+  };
+  
+  module.exports = { getExchangeRate };
 
 const app = express(); // Initialize app here before using it
 const port = 8000;
