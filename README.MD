@@ -1,1 +1,1 @@
-Download express, ejs, mysql and node.js, bcrypt.js, express-session, axios
+Download express, ejs, mysql and node.js, bcrypt.js, express-session, express-sanitizer, axios

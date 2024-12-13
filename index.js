@@ -8,7 +8,7 @@ const validator = require ('express-validator');
 const expressSanitizer = require('express-sanitizer');
 const axios = require('axios');
 
-// Function to get exchange rate
+// Function to get exchange rate api
 const getExchangeRate = async (baseCurrency, targetCurrency) => {
     const apiKey = '4fed1e1e80cbe7515194ada9';  // Your API key
     const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${baseCurrency}`;

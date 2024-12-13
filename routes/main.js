@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getExchangeRate } = require('../index');  // Import the getExchangeRate function
+const { getExchangeRate } = require('../index');
 
 // Endpoint to get exchange rate between two currencies
 router.get('/currency-exchange', async (req, res) => {
@@ -49,7 +49,6 @@ router.get('/listusers', redirectLogin, function (req, res) {
     });
 });
 
-// GET: Show transactions (with filters)
 // Transactions page (protected)
 router.get('/transactions', redirectLogin, function (req, res) {
     let { transaction_date, category, amount_range_min, amount_range_max } = req.query;
@@ -135,7 +134,7 @@ router.post('/transactions/delete/:transaction_id', redirectLogin, function (req
 router.get('/transactions/edit/:transaction_id', redirectLogin, function (req, res) {
     const transactionId = req.params.transaction_id;
 
-    // Fetch the transaction details to pre-fill the form (not used in this example but could be useful in GET)
+    // Fetch the transaction details to pre-fill the form
     const sql = 'SELECT * FROM transactions WHERE transaction_id = ? AND user_id = ?';
     db.query(sql, [transactionId, req.session.userId], (err, results) => {
         if (err || results.length === 0) {
@@ -236,8 +235,6 @@ router.get('/transactions/search', redirectLogin, (req, res) => {
         res.render('transactions.ejs', { transactions: results });
     });
 });
-
-
 
 // Export the router
 module.exports = router;

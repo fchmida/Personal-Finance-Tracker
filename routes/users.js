@@ -14,11 +14,13 @@ const redirectLogin = (req, res, next) => {
     }
 };
 
+// Login route
 router.get('/login', function (req, res) {
     const message = req.query.message === 'logged_out' ? 'You have been logged out.': null;
     res.render('login.ejs', { user: req.session.user, message });
 });
-// Login route
+
+
 router.post('/login', function (req, res) {
     const username = req.sanitize(req.body.username);
     const password = req.body.password; // password doesn't need sanitization because it's hashed

@@ -134,14 +134,14 @@ label {
     text-align: center;
     left: 100px;
     color: #bf416f;
-    margin-top: 60px; /* Ensure there's space below the navbar */
+    margin-top: 60px;
 }
 
 /* Table container */
 .table-container {
     width: auto;
     margin: 0 auto;
-    table-layout: fixed;      /* This ensures the table doesn’t stretch too wide */
+    table-layout: fixed;
     border-collapse: collapse;
     display: flex;
     position: absolute;
@@ -304,7 +304,7 @@ label {
         align-items: center;
     }
 
-    .filter-form, .add-transaction-form, .transactions-table {
+    .add-transaction-form, .transactions-table {
         width: 100%;
         max-width: 100%;
         min-width: unset;
