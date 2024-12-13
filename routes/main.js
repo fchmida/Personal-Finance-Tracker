@@ -33,11 +33,6 @@ router.get('/listusers', redirectLogin, function (req, res) {
     });
 });
 
-// Dashboard page (protected)
-router.get('/dashboard', redirectLogin, function (req, res) {
-    res.render('dashboard.ejs', { user: req.session.user });
-});
-
 // GET: Show transactions (with filters)
 // Transactions page (protected)
 router.get('/transactions', redirectLogin, function (req, res) {

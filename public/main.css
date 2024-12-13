@@ -1,239 +1,263 @@
-/* general reset */
-body, h1, p, form, input, label{
+/* General reset for all elements */
+body, h1, p, form, input, label {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
 
-body{
+/* Body Styling */
+body {
     font-family: Arial, sans-serif;
     background-color: #272036;
     color: #bf416f;
     line-height: 1.6;
     padding: 20px;
-  }
-
-h1{
-    font-size: 2em;
-    text-align: center;
-    color: #bf416f;
-    margin-bottom: 20px;
 }
 
-form{
-    max-width: 400px;
+/* Heading Styles */
+h1 {
+    font-size: 2.5em;
+    text-align: center;
+    color: #bf416f;
+    margin-bottom: 30px;
+}
+
+/* Form Container */
+form {
+    max-width: 450px;
     margin: 0 auto;
     background: #bfbabe;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 25px;
+    border-radius: 12px;
     font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Form Inputs */
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select {
     width: 100%;
-    padding: 7px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     font-size: 1em;
+    background-color: #fff;
+    color: #272036;
+    transition: border-color 0.3s ease;
 }
 
-/* buttons */
+/* Input focus effect */
+input:focus, select:focus {
+    border-color: #793e96;
+    outline: none;
+}
+
+/* Submit/Reset Buttons */
 input[type="submit"],
 input[type="reset"] {
-    background-color :#bfbabe;
-    color: #bf416f;
-    padding: 10px 15px;
-    border: solid;
-    border-width: 2px;
-    border-radius: 5px;
-    font-size: 1em;
+    background-color: #bf416f;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
     cursor: pointer;
-    width: 49%  /* buttons side by side */
+    width: 48%;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
-input[type="submit"]:hover,
-input[type="reset"]:hover {
-    background-color: #f6c6d8;
+input[type="submit"]:hover {
+    background-color: #793e96;
 }
 
 input[type="reset"]:hover {
-    background-color: #e76967; /* Darker red on hover */
+    background-color: #e76967;
 }
 
 /* Label Styling */
 label {
     font-weight: bold;
+    font-size: 1.1em;
+    color: #272036;
+    margin-bottom: 8px;
     display: block;
-    margin-bottom: 5px;
 }
 
-.navbar{
+/* Navbar */
+.navbar {
     background-color: #bfbabe;
-    border-radius: 10px;
-    padding: 10px 0px;
-    position: sticky;  /* #keeps nav fixed on top when scrolling */
+    border-radius: 12px;
+    padding: 15px 0;
+    position: sticky;
     top: 0;
     width: 100%;
-    margin-bottom: 20px; /* Add space below the navbar */
-    height: auto; /* ensures navbar adapts only to its content */
+    margin-bottom: 20px;
+    z-index: 100;
 }
 
-.nav-list{
+/* Navbar links */
+.nav-list {
     list-style-type: none;
     display: flex;
     justify-content: center;
 }
 
-.nav-list li{
-    margin: 0 20px; /* spacing between links */
+.nav-list li {
+    margin: 0 25px;
 }
 
-.nav-list li a{
+.nav-list li a {
     text-decoration: none;
     color: #793e96;
-    font-size: 15px;
-    padding: 10px 20px; 
-    transition: background-color 0.3s ease; /* smooths transition for hover efffect */
+    font-size: 1em;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
 }
 
+.nav-list li a:hover {
+    background-color: #f6c6d8;
+    border-radius: 8px;
+}
 
+/* Header with center alignment */
 .ul-header {
-    position: absolute; /* change to absolute for centering */
-    white-space: nowrap;
-    font-size: 2em;
-    font-family: Arial, sans-serif;
+    position: absolute;
+    font-size: 2.5em;
     text-align: center;
     color: #bf416f;
-    margin: 50px 0;
-    top: 70%; /*position vertically in center*/
-    left: 10%; /*position horizontally in center*/
-    transform: translate(-50%, -50%); /* Adjust the element's position to truly center it */
-    margin-top: 10vh; /* Add space above the header */
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 10vh;
 }
 
+/* Table container */
 .table-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100hv - 60px); /* Adjust height to avoid interfering with sticky navbar */
-    margin-top: 20px; /* Add spacing from the navbar */
+    margin-top: 30px;
 }
 
-table {
-    position: absolute;
-    border-collapse: collapse;
-    text-align: center;
-    width: 50%;
-    top: 20%; /*position vertically in center*/
-    left: 50%; /*position horizontally in center*/
-    transform: translate(-50%, -50%);
-    margin-top: 40vh;
-}
-
-/* Main container for forms and table */
+/* Forms and Table container */
 .forms-table-container {
     display: flex;
-    justify-content: space-between; /* Space between the forms and the table */
-    gap: 30px; /* Adds space between the forms and table */
-    margin-bottom: 40px; /* Adds some space at the bottom of the container */
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
-/* Filter and Add Transaction Forms */
+/* Form container */
 .form-container {
-    flex: 1 1 45%; /* Ensures the forms take up 45% of the container width */
-    min-width: 300px; /* Prevents forms from becoming too small on small screens */
+    flex: 1 1 48%;
+    min-width: 320px;
     background-color: #bfbabe;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box; /* Ensures padding and borders are included in the width */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
-.filter-form, .add-transaction-form {
-    margin-bottom: 20px; /* Adds space below each form */
+.add-transaction-form {
+    margin-bottom: 25px;
 }
 
-.filter-form h2, .add-transaction-form h2 {
-    font-size: 20px;
+/* Form heading */
+.add-transaction-form h2 {
+    font-size: 1.8em;
     margin-bottom: 20px;
+    color: #793e96;
 }
 
-.filter-form label, .add-transaction-form label {
-    font-size: 16px;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.filter-form input, .add-transaction-form input, .add-transaction-form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.filter-form button, .add-transaction-form button {
-    padding: 10px 15px;
+/* Button inside forms */
+.add-transaction-form button {
+    padding: 12px 18px;
     background-color: #bf416f;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
 }
 
-.filter-form button:hover, .add-transaction-form button:hover {
-    background-color: #bf416f;
+.add-transaction-form button:hover {
+    background-color: #793e96;
 }
 
 /* Transaction Table */
 .transactions-table {
-    flex: 1 1 50%; /* Ensures the table takes up 50% of the container width */
-    min-width: 300px; /* Prevents table from becoming too small on small screens */
+    flex: 1 1 50%;
+    min-width: 320px;
     width: 100%;
-    margin-top: 20px; /* Adds space between the form and the table */
+    margin-top: 30px;
     border-collapse: collapse;
-    box-sizing: border-box; /* Ensures borders are included in the width */
+    background-color: #f9f9f9;
+    border-radius: 10px;
 }
 
-.transactions-table th, .transactions-table td {
-    padding: 12px 15px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
+/* Table Header */
 .transactions-table th {
+    padding: 15px;
+    text-align: center;
     background-color: #793e96;
     color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    text-transform: uppercase;
 }
 
+/* Table Data */
+.transactions-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 1em;
+    color: #272036;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for table rows */
+.transactions-table tr:hover td {
+    background-color: #f6c6d8;
+}
+
+/* Table link styling */
 .transactions-table td a {
     text-decoration: none;
     color: #793e96;
     font-weight: bold;
+    transition: color 0.3s ease;
 }
 
+.transactions-table td a:hover {
+    color: #bf416f;
+}
+
+/* Button inside table cells */
 .transactions-table td form button {
-    padding: 6px 12px;
+    padding: 4px 8px;
     background-color: #e76967;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 .transactions-table td form button:hover {
-    background-color: #bf416f;
+    background-color: #793e96;
 }
 
-/* Ensure forms and table stack vertically on smaller screens */
+/* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
     .forms-table-container {
         flex-direction: column;
@@ -241,12 +265,18 @@ table {
     }
 
     .filter-form, .add-transaction-form, .transactions-table {
-        max-width: 100%;
         width: 100%;
-        min-width: unset; /* Remove minimum width for smaller screens */
+        max-width: 100%;
+        min-width: unset;
     }
 
-    .forms-table-container {
-        gap: 20px; /* Reduces space between the forms and table on smaller screens */
+    .transactions-table th, .transactions-table td {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+
+    .add-transaction-form h2 {
+        font-size: 1.5em;
     }
 }
+

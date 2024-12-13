@@ -52,8 +52,8 @@ router.post('/login', function (req, res) {
                     name: result[0].name
                 };
 
-                // Redirect to dashboard after successful login
-                return res.redirect('/dashboard');
+                // Redirect to about after successful login
+                return res.redirect('/about');
             } else {
                 return res.status(401).send("Incorrect password.");
             }
@@ -120,8 +120,8 @@ router.post('/registered', [
                 name: name
             };
 
-            // Redirect to the dashboard after successful registration
-            res.redirect('/dashboard');
+            // Redirect to the about after successful registration
+            res.redirect('/about');
         });
     });
 });
