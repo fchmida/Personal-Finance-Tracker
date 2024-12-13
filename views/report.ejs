@@ -21,6 +21,11 @@
       </ul>
     </nav>
     <h1>Reports</h1>
-    <p>Your reports</p>
+    <section class="summary">
+      <h2>Summary</h2>
+      <p><strong>Total Income:</strong> £<%= totalIncome.toFixed(2) %></p>
+      <p><strong>Total Expense:</strong> £<%= totalExpense.toFixed(2) %></p>
+      <p><strong>Net Balance:</strong> £<%= (totalIncome - totalExpense).toFixed(2) %></p>
+  </section>
   </body>
 </html>

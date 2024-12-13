@@ -91,16 +91,19 @@ router.get('/transactions', redirectLogin, function (req, res) {
 
 // Add transaction (protected)
 router.post('/transactions/add', redirectLogin, function (req, res) {
-    const { description, amount, category_id, transaction_date } = req.body;
-
+    const { description, amount, type, category_id, transaction_date } = req.body;
+    
+    if (!['income', 'expense'].includes(type)) {
+        return res.status(400).send('Invalid transaction type');
+    }
     // Insert new transaction
     const sql = `
-        INSERT INTO transactions (description, amount, category_id, user_id, transaction_date)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO transactions (description, amount, type, category_id, user_id, transaction_date)
+        VALUES (?, ?, ?, ?, ?, ?)
     `;
     const userId = req.session.userId; // Use the user ID from the session
 
-    db.query(sql, [description, amount, category_id || null, userId, transaction_date], (err) => {
+    db.query(sql, [description, amount, type, category_id || null, userId, transaction_date], (err) => {
         if (err) {
             console.error('Error adding transaction:', err);
             return res.status(500).send('Server Error');
@@ -131,8 +134,34 @@ router.post('/transactions/delete/:transaction_id', redirectLogin, function (req
 
 // Report page (protected)
 router.get('/report', redirectLogin, function (req, res) {
-    res.render('report.ejs', { user: req.session.user });
+    const userId = req.session.userId;  // Retrieve the logged-in user's ID from the session
+
+    // SQL query to calculate total income and total expense
+    const totalsQuery = `
+        SELECT 
+            SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) AS total_income,
+            SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS total_expense
+        FROM transactions
+        WHERE user_id = ?
+    `;
+
+    db.query(totalsQuery, [userId], (err, results) => {
+        if (err) {
+            console.error('Error fetching totals:', err);
+            return res.status(500).send('Server Error');
+        }
+
+        // Ensure totalIncome and totalExpense are numbers and default to 0 if null or undefined
+        const totalIncome = parseFloat(results[0]?.total_income) || 0;
+        const totalExpense = parseFloat(results[0]?.total_expense) || 0;
+
+        // Pass total income and expense to the view
+        res.render('report.ejs', { totalIncome, totalExpense });
+    });
 });
+
+
+
 
 // Search page (protected)
 router.get('/transactions/search', redirectLogin, (req, res) => {
