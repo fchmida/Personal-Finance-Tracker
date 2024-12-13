@@ -93,7 +93,9 @@ label {
 .navbar {
     background-color: #bfbabe;
     border-radius: 12px;
+    justify-content: center;
     padding: 15px 0;
+    height: 50px;
     position: sticky;
     top: 0;
     width: 100%;
@@ -105,7 +107,6 @@ label {
 .nav-list {
     list-style-type: none;
     display: flex;
-    justify-content: center;
 }
 
 .nav-list li {
@@ -125,25 +126,64 @@ label {
     border-radius: 8px;
 }
 
-/* Header with center alignment */
+/* User List Header */
 .ul-header {
     position: absolute;
-    font-size: 2.5em;
+    font-size: 2em;
+    white-space: nowrap;
     text-align: center;
+    left: 100px;
     color: #bf416f;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin-top: 10vh;
+    margin-top: 60px; /* Ensure there's space below the navbar */
 }
 
 /* Table container */
 .table-container {
+    width: auto;
+    margin: 0 auto;
+    table-layout: fixed;      /* This ensures the table doesn’t stretch too wide */
+    border-collapse: collapse;
     display: flex;
+    position: absolute;
     justify-content: center;
-    align-items: center;
-    margin-top: 30px;
+    margin-top: 120px;
+    background-color: #bfbabe;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px #4c295d(0, 0, 0, 0.1);
+    padding: 15px; /* Adding padding to avoid overlapping navbar */
 }
+
+
+.table-container th {
+    padding: 10px;
+    text-align: left;
+    background-color: #793e96;
+    color: white;
+    font-size: 1.1em;
+    text-transform: uppercase;
+}
+
+.table-container td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 1em;
+    color: #bf416f;
+}
+
+/* Hover effect for table rows */
+.table-container tr:hover td {
+    background-color: #f6c6d8;
+}
+
+/* Table link styling */
+.table-container td a {
+    text-decoration: none;
+    color: #793e96;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
 
 /* Forms and Table container */
 .forms-table-container {

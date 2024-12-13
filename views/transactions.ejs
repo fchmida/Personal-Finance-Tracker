@@ -15,11 +15,11 @@
     <li><a href="about">About</a></li>
     <li><a href="users/register">Register</a></li>
     <li><a href="login">Login</a></li>
-    <li><a href="dashboard">Dashboard</a></li>
     <li><a href="transactions">Transactions</a></li>
     <li><a href="report">Reports</a></li>
     <li><a href="listusers">Users</a></li>
     <li><a href="search">Search</a></li>
+    <li><a href="/users/logout">Logout</a></li>
       </ul>
     </nav>
     <h1>Transactions</h1>
@@ -67,9 +67,10 @@
           <td><%= transaction.type %></td>
           <td><%= transaction.created_at %></td>
         <td>
-          <a href="/transactions/edit/<%= transaction.transaction_id %>">Edit</a>
-          <form action="/transactions/delete/<%= transaction.transaction_id %>" method="POST" style="display: inline;">
-            <button type="submit">Delete</button>
+           <!-- Edit Button (opens the edit form and populates it) -->
+           <button type="button" onclick="openEditForm('<%= transaction.transaction_id %>', '<%= transaction.description %>', '<%= transaction.amount %>', '<%= transaction.type %>')">Edit</button>
+              <form action="/transactions/delete/<%= transaction.transaction_id %>" method="POST" style="display: inline;">
+                <button type="submit">Delete</button>
           </form>
           </td>
         </tr>

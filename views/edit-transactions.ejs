@@ -1,6 +1,10 @@
-   <div id="editForm" style="display: none;">
-    <h2>Edit Transaction</h2>
-    <form id="editTransactionForm" method="POST">
+<!doctype html>
+<html>
+  <head>
+<!-- Edit Transaction Form (hidden by default) -->
+<div id="editForm" style="display: none;">
+  <h2>Edit Transaction</h2>
+  <form id="editTransactionForm" method="POST">
       <label for="editDescription">Description:</label>
       <input type="text" id="editDescription" name="description" required>
 
@@ -9,19 +13,28 @@
 
       <label for="editType">Type:</label>
       <select id="editType" name="type" required>
-        <option value="income">Income</option>
-        <option value="expense">Expense</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
       </select>
 
       <button type="submit">Update Transaction</button>
-    </form>
-   </div>
+  </form>
+</div>
 
-   <script>
-    //javascript to handle opening/filling edit form
-    function openEditForm(id){
-      //fetch transcation data using ajax or populate from dom
-      document.getElementById('editForm').style.display = block;
-      doucment.getElementById('editTransactionForm').action = '/transactions/edit/${id}';
-    }
-   </script>
+<script>
+  // Function to open the edit form and populate it with transaction data
+  function openEditForm(transactionId, description, amount, type) {
+    // Set the form's action URL to the edit route for the specific transaction
+    document.getElementById('editTransactionForm').action = `/transactions/edit/${transactionId}`;
+
+    // Populate the form fields with the current transaction data
+    document.getElementById('editDescription').value = description;
+    document.getElementById('editAmount').value = amount;
+    document.getElementById('editType').value = type;
+
+    // Show the edit form
+    document.getElementById('editForm').style.display = 'block';
+  }
+</script>
+</head>
+</html>

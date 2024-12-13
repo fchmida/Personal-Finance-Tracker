@@ -131,6 +131,49 @@ router.post('/transactions/delete/:transaction_id', redirectLogin, function (req
     });
 });
 
+// Edit transaction route (GET)
+router.get('/transactions/edit/:transaction_id', redirectLogin, function (req, res) {
+    const transactionId = req.params.transaction_id;
+
+    // Fetch the transaction details to pre-fill the form (not used in this example but could be useful in GET)
+    const sql = 'SELECT * FROM transactions WHERE transaction_id = ? AND user_id = ?';
+    db.query(sql, [transactionId, req.session.userId], (err, results) => {
+        if (err || results.length === 0) {
+            return res.status(404).send('Transaction not found');
+        }
+        const transaction = results[0];
+        res.render('editTransaction.ejs', { transaction });
+    });
+});
+
+// Edit transaction route (POST)
+router.post('/transactions/edit/:transaction_id', redirectLogin, function (req, res) {
+    const transactionId = req.params.transaction_id;
+    const { description, amount, type } = req.body;
+
+    // Ensure the type is valid (optional validation)
+    if (!['income', 'expense'].includes(type)) {
+        return res.status(400).send('Invalid transaction type');
+    }
+
+    // SQL to update the transaction in the database
+    const sql = `
+        UPDATE transactions
+        SET description = ?, amount = ?, type = ?
+        WHERE transaction_id = ? AND user_id = ?
+    `;
+
+    db.query(sql, [description, amount, type, transactionId, req.session.userId], (err) => {
+        if (err) {
+            console.error('Error updating transaction:', err);
+            return res.status(500).send('Server Error');
+        }
+
+        // After update, redirect back to the transactions page
+        res.redirect('/transactions');
+    });
+});
+
 
 // Report page (protected)
 router.get('/report', redirectLogin, function (req, res) {
